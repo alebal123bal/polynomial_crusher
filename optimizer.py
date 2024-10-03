@@ -23,7 +23,7 @@ monomials_B = [
 
 # Create polynomials from monomials
 A = automata_bindings.MultivariablePolynomial(monomials_A)
-B = automata_bindings.MultivariablePolynomial(monomials_B).pow(2)
+B = automata_bindings.MultivariablePolynomial(monomials_B)
 
 # Perform polynomial multiplication
 product_poly = A * B
