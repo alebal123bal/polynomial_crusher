@@ -22,11 +22,11 @@ Factorize a multivariate polynomial using optimization techniques.
 
 ## Overview
 
-This project provides a Python script for dividing multivariate polynomials and identifying their divisors. Leveraging both Python's scientific computing capabilities and a C++ backend (`automata_bindings`), the script performs polynomial multiplication, generates potential monomial subsets, and utilizes optimization techniques to find exact divisors of a given polynomial.
+This project provides a Python script for dividing multivariate polynomials and identifying their divisors. Leveraging both Python's scientific computing capabilities and a C++ backend (`automata_bindings`), the script performs polynomial division and minimizes the remainder to find divisors of a given polynomial.
 
 ## Features
 
-- **Multivariate Polynomial Operations:** Define, multiply, and manipulate polynomials in multiple variables.
+- **Multivariate Polynomial Operations:** Define and manipulate polynomials in multiple variables.
 - **Divisor Identification:** Systematically search for and identify divisors of a given multivariate polynomial.
 - **Optimization Integration:** Employ SciPy's optimization tools to minimize the remainder during polynomial division.
 - **C++ Performance:** Use a C++ compiled module (`automata_bindings`) for efficient polynomial computations.
@@ -87,10 +87,13 @@ The `automata_bindings` module is a C++ extension that needs to be compiled befo
 
 3. **Compile the Module:**
 
-   Ensure you have a compatible C++ compiler installed. Then, compile the module using the following command (modify paths and flags as necessary for your environment):
+   Ensure you have a compatible C++ compiler installed and CMake too. Then, compile the module using the following command (modify paths and flags as necessary for your environment):
 
    ```bash
-   c++ -O3 -shared -std=c++11 -fPIC $(python3 -m pybind11 --includes) automata_bindings.cpp -o automata_bindings$(python3-config --extension-suffix)
+   mkdir ./external/build
+   cd ./external/build
+   cmake ..
+   make
    ```
 
    **Notes:**
@@ -99,11 +102,12 @@ The `automata_bindings` module is a C++ extension that needs to be compiled befo
 
 4. **Verify Compilation:**
 
-   After successful compilation, a shared object file (e.g., `automata_bindings.so` on Linux/macOS or `automata_bindings.pyd` on Windows) should be present in the `automata_bindings` directory.
+   After successful compilation, a shared object file e.g. `automata_bindings.so` on Linux should be present in the `external/build/bin` directory.
 
 5. **Navigate Back:**
 
    ```bash
+   cd ..
    cd ..
    ```
 
@@ -157,11 +161,11 @@ monomials_B = [
 
 # Create polynomials from monomials
 A = automata_bindings.MultivariablePolynomial(monomials_A)
-B = automata_bindings.MultivariablePolynomial(monomials_B).pow(10)
+B = automata_bindings.MultivariablePolynomial(monomials_B)
 ```
 
 - **Monomials:** Individual terms of a polynomial defined by their coefficients and exponents.
-- **Polynomials A and B:** Constructed from their respective monomials. Polynomial B is raised to the 10th power.
+- **Polynomials A and B:** Constructed from their respective monomials.
 
 ### Optimization Function
 
@@ -292,8 +296,7 @@ Each divisor polynomial will be printed using the `print()` method defined in th
 ## Troubleshooting
 
 - **`automata_bindings` Module Not Found:**
-  - Ensure that the C++ module is correctly compiled and the shared object/PYD file is located in the `automata_bindings` directory.
-  - Verify that your Python environment's `PYTHONPATH` includes the `automata_bindings` directory or place the compiled module in the same directory as the Python script.
+  - Ensure that the C++ module is correctly compiled and the shared object/PYD file is located in the `external/build/bin` directory.
 
 - **Compilation Errors:**
   - Check that you have a compatible C++ compiler installed.
@@ -306,7 +309,6 @@ Each divisor polynomial will be printed using the `print()` method defined in th
 
 - **Runtime Errors During Division:**
   - Make sure that the division operation is properly handled in the C++ module.
-  - Check for cases where the divisor might not divide the product polynomial, leading to remainders.
 
 ## Contributing
 
