@@ -18,12 +18,12 @@ monomials_A = [
 # Create monomials for Q(x, y)
 monomials_B = [
     automata_bindings.Monomial(1, [3, 0]),  # x^3
-    automata_bindings.Monomial(1, [0, 3])   # y^3
+    automata_bindings.Monomial(1, [0, 3]),  # y^3
 ]
 
 # Create polynomials from monomials
 A = automata_bindings.MultivariablePolynomial(monomials_A)
-B = automata_bindings.MultivariablePolynomial(monomials_B)
+B = automata_bindings.MultivariablePolynomial(monomials_B).pow(10)
 
 # Perform polynomial multiplication
 product_poly = A * B
@@ -131,7 +131,7 @@ def optimize_for_monomials(selected_poly):
 # Generate all possible subsets of monomials
 # for r in range(1, len(all_possible_monomials) + 1):
 # for r in range(1, len(product_poly.monomialVec) + 1):
-for r in range(1, 4):
+for r in range(1, 3):
     print(f"\n\nProcessing subsets of size {r}...\n\n")
 
     for my_poly in combinations(all_possible_monomials, r):
