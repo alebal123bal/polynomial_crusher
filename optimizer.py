@@ -3,7 +3,7 @@ import numpy as np
 from scipy.optimize import minimize
 import time
 import random
-import automata_bindings
+from external.build import automata_bindings
 from itertools import combinations, product
 
 # Define two polynomials
