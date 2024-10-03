@@ -13,7 +13,6 @@ monomials_A = [
     automata_bindings.Monomial(1, [2, 0]),  # x^2
     automata_bindings.Monomial(2, [1, 1]),  # 2xy
     automata_bindings.Monomial(1, [0, 2]),  # y^2
-    automata_bindings.Monomial(1, [0, 3]),  # y^3
 ]
 
 # Create monomials for Q(x, y)
@@ -28,9 +27,9 @@ B = automata_bindings.MultivariablePolynomial(monomials_B)
 
 # Perform polynomial multiplication
 product_poly = A * B
-print("\nProduct polynomial is")
-product_poly.print()
-print()
+# print("\nProduct polynomial is")
+# product_poly.print()
+# print()
 
 # Determine the maximum degree for the variables x and y
 max_x_degree = max([mon.exponents[0] for mon in product_poly.monomialVec])
@@ -71,7 +70,7 @@ def optimize_for_monomials(selected_poly):
         try:
             _, remainder = product_poly / divisor_poly
         except RuntimeError as e:
-            print(e)
+            # print(e)
             # Return terrible result
             return np.finfo(np.float64).max
 
@@ -94,7 +93,7 @@ def optimize_for_monomials(selected_poly):
     # Calculate variance
     variance = np.var(candidate_values)
     if variance < 1e-5:  # You can adjust this threshold
-        print("Objective function appears to be flat based on random sampling. Skipping optimization.")
+        # print("Objective function appears to be flat based on random sampling. Skipping optimization.")
         return None
     
     # Perform optimization using L-BFGS
@@ -116,16 +115,16 @@ def optimize_for_monomials(selected_poly):
 
             divisors.append(best_polynomial)
 
-            print("\nFound an exact divisor in ")
-            best_polynomial.print()
-            print()
+            # print("\nFound an exact divisor in ")
+            # best_polynomial.print()
+            # print()
 
         return result
     
     except Exception as e:
-        print(f"Optimization failed for polynomial: ")
-        selected_poly.print()
-        print(f"with error: {e}")
+        # print(f"Optimization failed for polynomial: ")
+        # selected_poly.print()
+        # print(f"with error: {e}")
         return None
 
 
@@ -148,20 +147,20 @@ for r in range(1, 4):
         # ):
         #     breakpoint()
 
-        print(f"Optimizing for polynomial: ")
-        my_poly.print()
+        # print(f"Optimizing for polynomial: ")
+        # my_poly.print()
 
         # Perform optimization
         result = optimize_for_monomials(my_poly)
 
         # In case of crash or early termination, print message
         if result is None or not result.success:
-            print("Done with combination: ")
-            my_poly.print()
-            print(f"due to {result.message if result is not None else 'None result'}.\n")
+            # print("Done with combination: ")
+            # my_poly.print()
+            # print(f"due to {result.message if result is not None else 'None result'}.\n")
             continue
         
-        print(f"Result: {result.fun}\n")
+        # print(f"Result: {result.fun}\n")
 
 # Perform final analysis
 print("Divisors are (molteplicity of 1)\n")
