@@ -3,7 +3,7 @@ import numpy as np
 from scipy.optimize import minimize
 import time
 import random
-from external.build import automata_bindings
+from external.build.bin import automata_bindings
 from itertools import combinations, product
 
 # Define two polynomials
@@ -23,7 +23,7 @@ monomials_B = [
 
 # Create polynomials from monomials
 A = automata_bindings.MultivariablePolynomial(monomials_A)
-B = automata_bindings.MultivariablePolynomial(monomials_B).pow(10)
+B = automata_bindings.MultivariablePolynomial(monomials_B).pow(2)
 
 # Perform polynomial multiplication
 product_poly = A * B
